@@ -1,0 +1,150 @@
+API Documentation
+Base URL
+http://localhost:8080
+
+1. Authentication Routes
+1.1 Login
+Endpoint: POST /auth/login
+
+Description: Authenticates the user and generates a JWT token.
+
+Request Body:
+{
+  "username": "admin",
+  "password": "admin123"
+}
+
+Response:
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
+
+Example:
+POST http://localhost:8080/auth/login
+Body: { "username": "admin", "password": "admin123" }
+
+
+1.2 Signup
+Endpoint: POST /auth/signup
+
+Description: Registers a new user with appropriate validations.
+
+Request Body:
+{
+  "username": "manager",
+  "password": "manager123",
+  "role": "manager"
+}
+
+Response:
+{
+  "message": "User registered successfully."
+}
+
+Example:
+POST http://localhost:8080/auth/signup
+Body: { "username": "manager", "password": "manager123", "role": "manager" }
+
+
+
+2. Farm Admin Routes
+2.1 Get All Users
+Endpoint: GET /admin/users
+
+Description: Retrieves the list of all users in the system with role and status details.
+
+Headers:
+Authorization: Bearer <JWT_TOKEN>
+
+Response:
+[
+  {
+    "_id": "64f1b2c3e4b0a1b2c3d4e5f6",
+    "username": "admin",
+    "role": "admin"
+  },
+  {
+    "_id": "64f1b2c3e4b0a1b2c3d4e5f7",
+    "username": "manager",
+    "role": "manager"
+  }
+]
+
+Example:
+GET http://localhost:8080/admin/users
+Headers: Authorization: Bearer <JWT_TOKEN>
+
+
+3. Farm Manager Routes
+3.1 Assign Task to Technician
+Endpoint: POST /manager/tasks
+
+Description: Assigns tasks to technicians with task details such as title, deadline, etc.
+
+Headers:
+Authorization: Bearer <JWT_TOKEN>
+
+Request Body:
+{
+  "title": "Fix irrigation system",
+  "deadline": "2023-10-15",
+  "assignedTo": "64f1b2c3e4b0a1b2c3d4e5f7" // Technician's user ID
+}
+
+Response:
+{
+  "message": "Task assigned successfully."
+}
+
+Example:
+POST http://localhost:8080/manager/tasks
+Headers: Authorization: Bearer <JWT_TOKEN>
+Body: { "title": "Fix irrigation system", "deadline": "2023-10-15", "assignedTo": "64f1b2c3e4b0a1b2c3d4e5f7" }
+
+
+4. Farm Technician Routes
+4.1 Get Assigned Tasks
+Endpoint: GET /technician/tasks
+
+Description: Retrieves a list of tasks assigned to the logged-in technician.
+
+Headers:
+Authorization: Bearer <JWT_TOKEN>
+
+Response:
+[
+  {
+    "_id": "64f1b2c3e4b0a1b2c3d4e5f8",
+    "title": "Fix irrigation system",
+    "deadline": "2023-10-15T00:00:00.000Z",
+    "assignedTo": "64f1b2c3e4b0a1b2c3d4e5f7"
+  }
+]
+
+
+Example:
+GET http://localhost:8080/technician/tasks
+Headers: Authorization: Bearer <JWT_TOKEN>
+
+
+5. End User Routes
+5.1 View Profile
+Endpoint: GET /user/profile
+
+Description: Retrieves the profile information of the logged-in user.
+
+Headers:
+Authorization: Bearer <JWT_TOKEN>
+
+Response:
+
+{
+  "_id": "64f1b2c3e4b0a1b2c3d4e5f6",
+  "username": "user",
+  "role": "user"
+}
+
+
+Example:
+GET http://localhost:8080/user/profile
+Headers: Authorization: Bearer <JWT_TOKEN>
