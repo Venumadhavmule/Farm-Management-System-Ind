@@ -1,8 +1,13 @@
-const User = require('../models/User');
+const User = require("../models/User");
 
-const getUsers = async (req, res) => {
-  const users = await User.find({}, '-password');
-  res.send(users);
+const getUsers = (req, res) => {
+  User.find({}, "-password")
+    .then((users) => {
+      res.send(users);
+    })
+    .catch((error) => {
+      res.status(500).send({ message: "Error fetching users", error });
+    });
 };
 
 module.exports = { getUsers };

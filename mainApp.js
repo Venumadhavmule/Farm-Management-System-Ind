@@ -10,7 +10,7 @@ const userRoutes = require('./routes/userRoutes');
 const app = express();
 app.use(cors());
 app.use(express.json());
-connectDatabase();
+connectDatabase;
 
 app.use('/auth', authenticationRoutes);
 app.use('/admin', adminRoutes);
